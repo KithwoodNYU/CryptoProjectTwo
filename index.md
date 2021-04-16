@@ -13,7 +13,7 @@ title: SH4D3S CryptoQuery
 
 ## Questions
 
-{% for s in site.data.cryptoquestions %}
+{% for s in site.data.cryptoqueries %}
 ###{{ s.section }}
 {% for q in s.questions %}
 ** Q: {{ q.q }}
