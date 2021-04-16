@@ -16,8 +16,8 @@ title: SH4D3S CryptoQuery
 {% for s in site.data.cryptoqueries %}
 ###{{ s.section }}
 {% for q in s.questions %}
-** Q: {{ q.q }}
-{% if q.type == 'single-choice' %}
+**Q: {{ q.q }}**
+{% if q.type == 'singlechoice' %}
 {% for a in q.answers %}
 <input type='radio' group='{{s.section}}' value='{{a.a}}'/>
 {% endfor %}
