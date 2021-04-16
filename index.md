@@ -20,6 +20,7 @@ title: SH4D3S CryptoQuery
 {% if q.type == 'singlechoice' %}
 {% for a in q.answers %}
 <input type='radio' name='{{s.section}}' value='{{a.a}}'/>
+<label for='{{a.id}}'>{{a.a}}</label>
 {% endfor %}
 {% endif %}
 {% endfor %}
