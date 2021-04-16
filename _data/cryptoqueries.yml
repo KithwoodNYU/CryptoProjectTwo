@@ -1,6 +1,6 @@
 - section: Initial Questions
   questions:
-    - type: single-choice
+    - type: singlechoice
       q: How will you be using cryptography?
       answers:
          - a: This way
