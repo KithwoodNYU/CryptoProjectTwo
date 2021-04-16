@@ -1,8 +1,8 @@
 - section: Initial Questions
-  - questions:
-      - type: single-choice
-        q: How will you be using cryptography?
-        answers:
-          - a: This way
-          - a: That way
-          - a: Another way
+  questions:
+    - type: single-choice
+      q: How will you be using cryptography?
+       answers:
+         - a: This way
+         - a: That way
+         - a: Another way
