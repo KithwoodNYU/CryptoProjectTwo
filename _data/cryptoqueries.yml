@@ -2,7 +2,7 @@
   questions:
     - type: single-choice
       q: How will you be using cryptography?
-       answers:
+      answers:
          - a: This way
          - a: That way
          - a: Another way
