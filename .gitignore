@@ -1,0 +1,7 @@
+/Gemfile.lock
+/favicon.ico
+_site/
+.sass-cache
+.idea/
+*.iml
+.DS_Store
