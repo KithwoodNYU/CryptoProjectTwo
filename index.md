@@ -26,7 +26,6 @@ section {
 
 ![header image](/assets/images/sh4d3s_cp2.png)
 
-# {{ page.title }}
 
 ## Instructions
 * Do this and then
