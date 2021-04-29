@@ -62,7 +62,7 @@
 - section: MultiQs
   secid: s3
   questions:
-    - type: singlechoice
+    - type: multichoice
       q: What is your excuse?
       qid: exq
       answers:

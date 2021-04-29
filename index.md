@@ -39,11 +39,16 @@ section {
 <section id="{{s.secid}}">
 <h3>{{ s.section }}</h3>
 
+
+{% assign inputtype = 'radio' %}
 {% for q in s.questions %}
+{% if q.type == 'multichoice' %}
+{% assign inputtype = 'checkbox' %}
+{% endif %}
 <strong>Q: {{ q.q }}</strong><br>
-{% if q.type == 'singlechoice' %}
+{% if q.type == 'singlechoice' or q.type == 'multichoice' %}
 {% for a in q.answers %}
-<input type='radio' id="{{a.id}}" name="{{q.qid}}" value="{{a.a}}" data-subq="{{a.questions.size}}"/>
+<input type='{{ inputtype }}' id="{{a.id}}" name="{{q.qid}}" value="{{a.a}}" data-subq="{{a.questions.size}}"/>
 <label for="{{a.id}}">{{a.a}}</label><br>
 
 {% if a.questions.size > 0 %}
@@ -79,6 +84,7 @@ section {
 {% endfor %}
 </select><br>
 {% endif %}
+
 <br>
 
 {% endfor %}
@@ -87,8 +93,6 @@ section {
 {% endfor %}
 
 <button id='prevSection'>Back</button><button id='nextSection'>Continue</button>
-
-
 
 
 <script type='text/javascript'>
@@ -130,6 +134,17 @@ $(function () {
             $(this).siblings('.subquestion').hide(400, 'swing'); // why does this not work?
         }
    });
+
+   $(':checkbox').click(function() {
+        if($(this).data('subq') == '1') {
+            if($(this).is(":not(:checked)"))
+                $(this).siblings('.subquestion').hide(400, 'swing'); 
+            else
+                $(this).siblings('.subquestion').show(400, 'swing'); 
+        }
+        
+   });
+
 });
 
 function updateSections(initial = false) {
