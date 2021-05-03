@@ -1,0 +1,17 @@
+{ "schemes": [
+    { "name":"DES", "id":"a1" , "url":"https://en.wikipedia.org/wiki/Data_Encryption_Standard"},
+    { "name":"Triple DES", "id":"a2", "url":"https://en.wikipedia.org/wiki/Triple_DES"},
+    { "name":"AES in ECB mode", "id":"a3", "url":"http://www.cryptogrium.com/aes-encryption-online-ecb.html#:~:text=Electronic%20Codebook%20%28ECB%29%20mode%20is%20the%20simplest%20encryption,key%20size%20of%20128%2C%20192%20or%20256%20bits."},
+    { "name":"AES in CBC mode", "id":"a4", "url":"https://tools.ietf.org/html/rfc3268"},
+    { "name":"AES in OFB mode", "id":"a5", "url":"https://www.includehelp.com/cryptography/output-feedback-mode-ofb-in-cryptography.aspx"},
+    { "name":"AES in Counter (CTR) mode", "id":"a6", "url":"https://www.gurutechnologies.net/blog/aes-ctr-encryption-in-c/"},
+    { "name":"AES in GCM mode", "id":"a7", "url":"https://en.wikipedia.org/wiki/Galois/Counter_Mode"},
+    { "name":"IDEA", "id":"a8", "url":"https://en.wikipedia.org/wiki/International_Data_Encryption_Algorithm"},
+    { "name":"SIMON", "id":"a9", "url":"https://en.wikipedia.org/wiki/Simon_%28cipher%29#:~:text=Description%20of%20the%20cipher%20The%20Simon%20block%20cipher,implementation%20is%20denoted%20as%20Simon2%20n%20%2F%20nm."},
+    { "name":"Twofish", "id":"a10", "url":"https://www.schneier.com/academic/twofish/"},
+    { "name":"RC4", "id":"a11", "url":"https://en.wikipedia.org/wiki/RC4"},
+    { "name":"RC5", "id":"a12", "url":"https://en.wikipedia.org/wiki/RC5"},
+    { "name":"RC6", "id":"a13", "url":"https://en.wikipedia.org/wiki/RC6"},
+    { "name":"One Time Pad", "id":"a14", "url":"https://en.wikipedia.org/wiki/One-time_pad"},
+    { "name":"No soup for you!  We will assume no, continue...", "id":"a15", "url":"https://knowyourmeme.com/memes/no-soup-for-you-soup-nazi"}
+]}

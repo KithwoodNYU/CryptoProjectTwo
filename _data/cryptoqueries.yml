@@ -1,94 +1,86 @@
-- section: Initial Questions
+- section: Getting to Know All About You
   secid: s1
   questions:
     - type: singlechoice
-      q: How will you be using cryptography?
-      qid: sc1
-      answers:
-         - a: This way
-           id: iqone
-           weight: .1
-         - a: That way
-           id: iqtwo
-           weight: .14
-         - a: Another way
-           id: iqthree
-           weight: .1
-    - type: singlechoice
-      q: Do you kiss your mother with that mouth?
-      qid: sc2
+      q: Do you wish to use an open standard to avoid paying license fees?
+      qid: q1
       answers:
          - a: Yes
-           id: iq2_1
-           weight: .1
+           id: a1q1
          - a: No
-           id: iq2_2
-           weight: .14
-         - a: Ew, gross!
-           id: iqthree
-           weight: .1
+           id: a2q1
+    - type: singlechoice
+      q: Will you be running on legacy or outdated hardware, potentially several years old?
+      qid: q2
+      answers:
+        - a: Yes
+          id: a1q2
+          end: true
+        - a: No
+          id: a2q2
+    - type: singlechoice
+      q: Do you need the encryption to be intentionally breakable like in a CTF competition or similar application?
+      qid: q3
+      answers:
+         - a: Yes
+           id: a1q3
+         - a: No
+           id: a2q3
 - section: Deeper Dive
   secid: s2
   questions:
-    - type: dropdown
-      q: Why would you drop this down?
-      qid: dd0
-      answers:
-        - a: Because
-          id: dd1
-          weight: .1
-        - a: Why not?
-          id: dd2
-          weight: .1
-        - a: For the Horde!
-          id: dd3
-          weight: .11
-        - a: Semper Fidelis
-          id: dd4
-          weight: .12
     - type: singlechoice
-      q: What is your quest?
-      qid: dd2
+      q: Are you more concerned about efficiency or security?
+      qid: q4
       answers:
-         - a: Queezes!
-           id: iq3_1
-           weight: .1
-         - a: I'm not really sure
-           id: iq3_2
-           weight: .14
-         - a: Let me think now.
-           id: iq3_3
-           weight: .1
-- section: MultiQs
+         - a: Efficiency.  I need my program to run quickly.
+           id: a1q4
+         - a: Security.  I cannot afford to have information leaked.
+           id: a2q4
+           questions:
+              - type: singlechoice
+                q: Is quantum computing available?
+                qid: q5
+                answers:
+                  - a: Yes
+                    id: a1q5
+                  - a: No
+                    id: a2q5
+                  - a: Quantum...Leap?  I loved that show!
+                    id: a3q5
+         - a: Both are equally important.
+           id: a3q4
+           questions:
+              - type: singlechoice
+                q: Is quantum computing available?
+                qid: q51
+                answers:
+                  - a: Yes
+                    id: a1q5
+                  - a: No
+                    id: a2q5
+                  - a: Quantum...Leap?  I loved that show!
+                    id: a3q5
+- section: Application, Threats, and Quantum, oh my!
   secid: s3
   questions:
-    - type: multichoice
-      q: What is your excuse?
-      qid: exq
+    - type: singlechoice
+      q: What type of content will you be encrypting?
+      qid: q6
       answers:
-        - a: Phone rings
-          id: pr1
-          weight: .1
-        - a: Family interrupts
-          id: fi1
-          weight: .1
-          questions:
-            - type: singlechoice
-              q: Which family member?
-              qid: wfm1
-              answers:
-                - a: Wife
-                  id: w1
-                  weight: 100
-                - a: Baby
-                  id: b1
-                  weight: .2
-                - a: Mom
-                  id: m1
-                  weight: .5
-        - a: Audio drops
-          id: ad1
-          weight: .1
-        - a: Fix router
-          id: fr1
-          weight: .2
+        - a: Streaming content like Netflix or Youtube
+          id: a1q6
+        - a: Short messages like a few pages of a novel
+          id: a2q6
+        - a: Long messages like a novel
+          id: a3q6  
+    - type: multichoice
+      q: What kinds of threats do you anticipate?
+      qid: q7
+      answers:
+        - a: Insider Threat
+          id: a1q7
+        - a: Competitors
+          id: a2q7
+        - a: Nation States
+          id: a3q7
