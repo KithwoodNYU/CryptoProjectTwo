@@ -21,6 +21,13 @@ section {
     display: none;
     margin-bottom: 0px;
 }
+
+#error {
+    display:none;
+    font-weight: bold;
+    color: black;
+    background: red;
+}
 </style>
 {% include addons.html %}
 
@@ -35,11 +42,10 @@ This tool is provided to help analyze what sort of encryption scheme you should 
 * Click Back to revisit answered questions
 * Click Show me the Results to see your chosen schemes
 
+<div id='error'>Please answer all questions in this section to continue</div>
 {% for s in site.data.cryptoqueries %}
 <section id="{{s.secid}}">
 <h3>{{ s.section }}</h3>
-
-
 {% assign inputtype = 'radio' %}
 {% for q in s.questions %}
 {% if q.type == 'multichoice' %}
@@ -93,7 +99,12 @@ This tool is provided to help analyze what sort of encryption scheme you should 
 </section>
 
 {% endfor %}
-<button id='prevSection'>Back</button><button id='nextSection'>Continue</button><button id='showAnswers'>Show me the Answers</button>
+
+<section id='final'>
+
+</section>
+
+<button id='prevSection'>Back</button><button id='nextSection'>Continue</button><button id='showAnswers'>Show me the Answers</button><button id='startOver'>Start Over</button>
 
 
 <script type='text/javascript'>
@@ -123,27 +134,54 @@ var chosen_answers = ["a1","a2","a3","a4","a5","a6","a7","a8","a9","a10","a11","
 var running_answers = [["a1","a2","a3","a4","a5","a6","a7","a8","a9","a10","a11","a12","a13","a14","a15"]];
 
 $(function () {
-    $('#prevSection').hide();
-    $('#showAnswers').hide();
 
-   updateSections(true);
+    init();
+   
 
    $('#nextSection').click(function() {
-        ndx = sections.indexOf(on_section);
-        on_section = sections[ndx + 1];
-
+       $('#error').hide();
+        add_answers = [];
+        qcount = 0;
+        acount = 0;
         $(':radio').each(function () {
-            if($(this).attr('display') != 'none' && $(this).is(":checked") && !$(this).data('subq') == '1'){
-                addAnswers(all_answers[$(this).attr('id')]);
+            if($(this).is(':visible') && $(this).is(":checked") && $(this).data('subq') != '1'){
+                add_answers.push(all_answers[$(this).attr('id')]);
+            }
+
+            if($(this).is(':visible') && $(this).is(':checked')) {
+                acount +=1;
             }
         });
         
         $(':checkbox').each(function () {
-            if($(this).visible && $(this).is(":checked") && !$(this).data('subq') == '1'){
-                addAnswers(all_answers[$(this).attr('id')]);                
+            if($(this).is(':visible') && $(this).is(":checked") && $(this).data('subq') != '1'){
+                add_answers.push(all_answers[$(this).attr('id')]);                
+            }
+            if($(this).is(':visible') && $(this).is(':checked')) {
+                acount +=1;
             }
         });
-        //alert(chosen_answers);
+       
+       $('strong').each(function(){
+           
+           if($(this).is(':visible'))
+                qcount += 1;                
+       });
+       
+       alert('answers' + acount);
+       alert('questions' + qcount);
+
+        if(acount < qcount) {
+            $('#error').show();
+            return;
+        }
+
+        for(let ans in add_answers) {
+            addAnswers(add_answers[ans]);
+        }
+
+        ndx = sections.indexOf(on_section);
+        on_section = sections[ndx + 1];
         running_answers.push(chosen_answers);
         updateSections();
         if(on_section == sections[sections.length - 1])
@@ -174,7 +212,39 @@ $(function () {
    });
 
    $('#showAnswers').click(function() {
-       alert(chosen_answers);
+       $('#error').hide();
+        add_answers = [];
+        qcount = 0;
+        acount = 0;
+        $(':radio').each(function () {
+            if($(this).is(':visible') && $(this).is(":checked") && !$(this).data('subq') == '1'){
+                add_answers.push(all_answers[$(this).attr('id')]);
+                acount += 1;
+            }
+        });
+        
+        $(':checkbox').each(function () {
+            if($(this).is(":visible") && $(this).is(":checked") && !$(this).data('subq') == '1'){
+                add_answers.push(all_answers[$(this).attr('id')]);     
+                acount += 1;           
+            }
+        });
+        $('strong').each(function(){
+           
+           if($(this).is(':visible'))
+                qcount += 1;                
+       });
+       
+        if(acount < qcount) {
+            $('#error').show();
+            return;
+        }
+        for(let ans in add_answers) {
+            addAnswers(add_answers[ans]);
+        }
+        
+        running_answers.push(chosen_answers);
+        goto_answers();
    })
 
    $(':radio').click(function () {
@@ -200,6 +270,9 @@ $(function () {
         
    });
 
+    $('#startOver').click(function() {
+        init();
+    });
 });
 
 function addAnswers(answers) {
@@ -230,4 +303,74 @@ function updateSections(initial = false) {
        }
    });
 };
+
+function getscheme(scheme_id) {
+    var scheme = {}
+    var schemes = { "schemes": [
+            { "name":"DES", "id":"a1" , "url":"https://en.wikipedia.org/wiki/Data_Encryption_Standard"},
+            { "name":"Triple DES", "id":"a2", "url":"https://en.wikipedia.org/wiki/Triple_DES"},
+            { "name":"AES in ECB mode", "id":"a3", "url":"http://www.cryptogrium.com/aes-encryption-online-ecb.html#:~:text=Electronic%20Codebook%20%28ECB%29%20mode%20is%20the%20simplest%20encryption,key%20size%20of%20128%2C%20192%20or%20256%20bits."},
+            { "name":"AES in CBC mode", "id":"a4", "url":"https://tools.ietf.org/html/rfc3268"},
+            { "name":"AES in OFB mode", "id":"a5", "url":"https://www.includehelp.com/cryptography/output-feedback-mode-ofb-in-cryptography.aspx"},
+            { "name":"AES in Counter (CTR) mode", "id":"a6", "url":"https://www.gurutechnologies.net/blog/aes-ctr-encryption-in-c/"},
+            { "name":"AES in GCM mode", "id":"a7", "url":"https://en.wikipedia.org/wiki/Galois/Counter_Mode"},
+            { "name":"IDEA", "id":"a8", "url":"https://en.wikipedia.org/wiki/International_Data_Encryption_Algorithm"},
+            { "name":"SIMON", "id":"a9", "url":"https://en.wikipedia.org/wiki/Simon_%28cipher%29#:~:text=Description%20of%20the%20cipher%20The%20Simon%20block%20cipher,implementation%20is%20denoted%20as%20Simon2%20n%20%2F%20nm."},
+            { "name":"Twofish", "id":"a10", "url":"https://www.schneier.com/academic/twofish/"},
+            { "name":"RC4", "id":"a11", "url":"https://en.wikipedia.org/wiki/RC4"},
+            { "name":"RC5", "id":"a12", "url":"https://en.wikipedia.org/wiki/RC5"},
+            { "name":"RC6", "id":"a13", "url":"https://en.wikipedia.org/wiki/RC6"},
+            { "name":"One Time Pad", "id":"a14", "url":"https://en.wikipedia.org/wiki/One-time_pad"},
+            { "name":"No soup for you!  We will assume no, continue...", "id":"a15", "url":"https://knowyourmeme.com/memes/no-soup-for-you-soup-nazi"}
+        ]};
+
+    for(let sch in schemes['schemes']) {
+
+        if(schemes['schemes'][sch]['id'] == scheme_id)
+            return schemes['schemes'][sch];
+    }
+    return scheme;
+}
+function goto_answers() {
+    htmlstr = "After evaluating your answers, the cyrptographic schemes you should pursue are:<p>";
+    htmlstr += "<ul>";
+    
+    for(let ans in chosen_answers) {
+        scheme = getscheme(chosen_answers[ans]);
+        if(scheme){
+            htmlstr += "<li><a href='" + scheme['url'] + "'>" + scheme['name'] + "</a></li>";
+        }
+    }
+    htmlstr += "</ul>";
+
+    $('#final').html(htmlstr);
+    $('section').each(function () {
+       if($(this).attr('id') != 'final') {
+          $(this).hide(400, 'swing');           
+       }
+   });
+    $('#final').show();
+    $('#startOver').show();
+    $('#prevSection').hide();
+    $('#showAnswers').hide();
+}
+
+function init() {
+    on_section = 's1';
+    updateSections(true);
+    $('#prevSection').hide();
+    $('#showAnswers').hide();
+    $('#startOver').hide();
+    $('#final').hide();
+    $('#nextSection').show();
+    $(':radio').each(function() {
+        $(this).prop('checked', false);
+    });
+    $(':checkbox').each(function() {
+        $(this).prop('checked', false);
+    });
+
+    chosen_answers = ["a1","a2","a3","a4","a5","a6","a7","a8","a9","a10","a11","a12","a13","a14","a15"];
+    running_answers = [["a1","a2","a3","a4","a5","a6","a7","a8","a9","a10","a11","a12","a13","a14","a15"]];
+}
 </script>
