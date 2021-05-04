@@ -350,17 +350,20 @@ function getscheme(scheme_id) {
     return scheme;
 }
 function goto_answers() {
-    htmlstr = "After evaluating your answers, the cyrptographic schemes you should pursue are:<p>";
-    htmlstr += "<ul>";
-    
-    for(let ans in chosen_answers) {
-        scheme = getscheme(chosen_answers[ans]);
-        if(scheme && scheme['id'] != 'a15'){
-            htmlstr += "<li><a href='" + scheme['url'] + "'>" + scheme['name'] + "</a><div class='blurb'>" + scheme['blurb'] + "</div></li>";
+    htmlstr = "After evaluating your answers, the cryptographic schemes you should pursue are:<p>";
+    if(chosen_answers.length > 0)
+    {
+        htmlstr += "<ul>";
+        for(let ans in chosen_answers) {
+            scheme = getscheme(chosen_answers[ans]);
+            if(scheme && scheme['id'] != 'a15'){
+                htmlstr += "<li><a href='" + scheme['url'] + "'>" + scheme['name'] + "</a><div class='blurb'>" + scheme['blurb'] + "</div></li>";
+            }
         }
+        htmlstr += "</ul>";
+    } else {
+        htmlstr = "Oops!  Looks like we couldn't find a good match with your requested parameters!"
     }
-    htmlstr += "</ul>";
-
     $('#final').html(htmlstr);
     $('section').each(function () {
        if($(this).attr('id') != 'final') {
