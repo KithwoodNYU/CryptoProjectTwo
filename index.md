@@ -79,7 +79,7 @@ This tool is provided to help analyze what sort of encryption scheme you should 
 <input type='radio' id="{{a.id}}" name="{{subq.qid}}" value="{{a.a}}"/>
 <label for="{{a.id}}">{{a.a}}</label><br>
 {%if a.id == 'a3q5' %}
-<div class='nosoup'><a href="https://knowyourmeme.com/memes/no-soup-for-you-soup-nazi"><img src="/assets/images/nosoup.jpg"><br>We will assume the answer is false.</a></div>
+<div class='nosoup'><a href="https://knowyourmeme.com/memes/no-soup-for-you-soup-nazi"><img src="assets/images/nosoup.jpg"><br>We will assume the answer is false.</a></div>
 {%endif%}
 {% endfor %} <!-- for a in subq.answers -->
 {% endif %} <!-- if subq.type == 'singlechoice' -->
