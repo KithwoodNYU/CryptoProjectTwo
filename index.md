@@ -125,15 +125,15 @@ This tool is provided to help analyze what sort of encryption scheme you should 
 var on_section = 's1';
 var sections = ['s1','s2','s3'];   
 var all_answers = {
-        "a1q4": [ "a1","a2","a3","a4","a5","a6","a7","a8","a9","a10","a11","a12","a13" ],
-        "a2q4":  [ "a4","a5","a6","a7","a8","a9","a10","a11","a12","a13","a14"],
-        "a3q4":  [ "a4","a5","a6","a7","a8","a9","a10","a11","a12","a13" ],
         "a1q1": ["a1","a2","a3","a4","a5","a6","a7","a9","a10","a12","a13","a14"],
         "a2q1": ["a1","a2","a3","a4","a5","a6","a7","a8","a9","a10","a11","a12","a13","a14"],
         "a1q2": ["a1","a2","a11"],
         "a2q2": ["a1","a2","a3","a4","a5","a6","a7","a8","a9","a10","a11","a12","a13","a14"],
         "a1q3": ["a1","a2","a3","a11"],
         "a2q3": ["a1","a2","a3","a4","a5","a6","a7","a8","a9","a10","a11","a12","a13","a14"],
+        "a1q4": [ "a1","a2","a3","a4","a5","a6","a7","a8","a9","a10","a11","a12","a13" ],
+        "a2q4": [ "a4","a5","a6","a7","a8","a9","a10","a11","a12","a13","a14"],
+        "a3q4": [ "a4","a5","a6","a7","a8","a9","a10","a11","a12","a13" ],
         "a1q5": ["a4","a5","a6","a7","a10","a13","a14"],
         "a2q5": ["a1","a2","a3","a4","a5","a6","a7","a8","a9","a10","a11","a12","a13"],
         "a3q5": ["a1","a2","a3","a4","a5","a6","a7","a8","a9","a10","a11","a12","a13"],
@@ -250,6 +250,8 @@ $(function () {
             $('#error').show();
             return;
         }
+
+
         for(let ans in add_answers) {
             addAnswers(add_answers[ans]);
         }
@@ -293,14 +295,31 @@ $(function () {
     });
 });
 
+function get_final_answers(answers) {
+    fanswers = [];
+    for(let ans in answers) {
+        fanswers.push(answers[ans]);
+    }
+
+    return fanswers;
+}
+
+function delete_from_chosen(answer){
+    ndx = chosen_answers.indexOf(answer);
+    if(ndx >= 0)
+        chosen_answers.splice(ndx, 1);
+}
+
 function addAnswers(answers) {
     if(running_answers.length <= 0) {
         chosen_answers = answers;
     }
     else {
-        for(let ans in chosen_answers){
-            if(answers.indexOf(chosen_answers[ans]) < 0){
-                chosen_answers.splice(ans, 1);
+        final_answers = get_final_answers(chosen_answers);
+        
+        for(let ans in final_answers){
+            if(answers.indexOf(final_answers[ans]) < 0){
+                delete_from_chosen(final_answers[ans]);
             }
         }                
     }
